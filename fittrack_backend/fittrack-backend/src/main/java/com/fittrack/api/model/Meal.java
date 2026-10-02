@@ -27,6 +27,8 @@ public class Meal {
     @Column(name = "is_cheat_meal", nullable = false)
     private boolean isCheatMeal = false;
 
+    private String notes;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
