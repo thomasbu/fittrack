@@ -26,13 +26,13 @@ public class FoodItem {
     private Integer caloriesPer100gr;
 
     @Column(name = "carbs_per_100gr")
-    private Integer carbsPer100gr;
+    private Double carbsPer100gr; // Passed to Double
 
     @Column(name = "fat_per_100gr")
-    private Integer fatPer100gr;
+    private Double fatPer100gr; // Passed to Double
 
     @Column(name = "protein_per_100gr")
-    private Integer proteinPer100gr;
+    private Double proteinPer100gr; // Passed to Double
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
