@@ -9,6 +9,8 @@ import com.fittrack.api.model.User;
 import com.fittrack.api.repository.FoodItemRepository;
 import com.fittrack.api.repository.MealRepository;
 import com.fittrack.api.repository.UserRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -140,5 +142,13 @@ public class MealService {
 
     private double roundTwoDecimals(double value) {
         return Math.round(value * 100.0) / 100.0;
+    }
+
+    @Transactional
+    public void deleteMeal(Long id) {
+        if (!mealRepository.existsById(id)) {
+            throw new EntityNotFoundException("Repas non trouvé avec l'ID : " + id);
+        }
+        mealRepository.deleteById(id);
     }
 }

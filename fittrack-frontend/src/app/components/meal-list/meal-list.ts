@@ -17,7 +17,7 @@ export class MealList {
   private currentUserId = 1;
 
   // Flux réactif : se charge au démarrage et se recharge automatiquement
-  // dès que mealRefresh$ émet un nouveau signal (après un createMeal).
+  // dès que mealRefresh$ émet un nouveau signal.
   meals = toSignal(
     this.mealService.mealRefresh$.pipe(
       startWith(0),
@@ -25,13 +25,6 @@ export class MealList {
     ),
     { initialValue: [] }
   );
-
-  // La méthode appelée par ton bouton HTML
-  loadMeals(): void {
-    // En incrémentant ou en déclenchant un flux, tu forces la recharge
-    // Ou plus simple : tu peux réutiliser le même mécanisme de trigger du service
-    this.mealService.triggerRefresh(); // (on va voir ça juste en dessous)
-  }
 
   isLoading = signal<boolean>(false);
   error = signal<string | null>(null);
@@ -57,5 +50,18 @@ export class MealList {
       default:
         return 'badge-snack';
     }
+  }
+
+  removeMeal(id: number): void {
+    this.mealService.deleteMeal(id).subscribe({
+      next: () => {
+        // Le backend a validé la suppression.
+        // On déclenche le rafraîchissement du flux, ce qui va recharger automatiquement la liste des repas !
+        this.mealService.triggerRefresh();
+      },
+      error: (err) => {
+        console.error('Erreur lors de la suppression du repas', err);
+      },
+    });
   }
 }

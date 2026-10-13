@@ -22,46 +22,70 @@ export class MealForm {
   errorMessage = signal<string | null>(null);
   foodItems = signal<FoodItem[]>([]);
 
-  // Types de repas pour le menu déroulant
   mealTypes = Object.values(MealType);
 
-  // Structure du formulaire réactif
   mealForm: FormGroup = this.fb.group({
     userId: [1, [Validators.required]], // ID fixe à 1 pour les tests
     mealType: [MealType.BREAKFAST, [Validators.required]],
     notes: [''],
     isCheatMeal: [false],
-    items: this.fb.array([]), // Liste dynamique d'aliments
+    items: this.fb.array([]),
   });
 
   constructor() {
-    // Ajouter au moins un aliment par défaut au démarrage
     this.addItem();
     this.loadFoodItems();
   }
 
-  // Getter pratique pour accéder au FormArray des aliments
   get items(): FormArray {
     return this.mealForm.get('items') as FormArray;
   }
 
-  // Ajouter une ligne d'aliment dans le formulaire
+  // Calcul en direct des macros totales du repas en cours
+  get totalMacros() {
+    let calories = 0;
+    let proteins = 0;
+    let carbs = 0;
+    let fat = 0;
+
+    for (const control of this.items.controls) {
+      const foodId = control.get('foodItemId')?.value;
+      const quantity = control.get('quantityInGrams')?.value || 0;
+
+      if (foodId) {
+        const food = this.foodItems().find((f) => f.id === foodId);
+        if (food) {
+          const ratio = quantity / 100;
+          calories += food.caloriesPer100gr * ratio;
+          proteins += food.proteinPer100gr * ratio;
+          carbs += food.carbsPer100gr * ratio;
+          fat += food.fatPer100gr * ratio;
+        }
+      }
+    }
+
+    return {
+      calories: Math.round(calories),
+      proteins: Math.round(proteins * 10) / 10,
+      carbs: Math.round(carbs * 10) / 10,
+      fat: Math.round(fat * 10) / 10,
+    };
+  }
+
   addItem(): void {
     const itemGroup = this.fb.group({
-      foodItemId: [null, [Validators.required, Validators.min(1)]],
+      foodItemId: [null, [Validators.required]],
       quantityInGrams: [100, [Validators.required, Validators.min(1)]],
     });
     this.items.push(itemGroup);
   }
 
-  // Supprimer une ligne d'aliment
   removeItem(index: number): void {
     if (this.items.length > 1) {
       this.items.removeAt(index);
     }
   }
 
-  // Soumission du formulaire vers Spring Boot
   onSubmit(): void {
     if (this.mealForm.invalid) {
       this.mealForm.markAllAsTouched();
@@ -77,15 +101,8 @@ export class MealForm {
       next: (res) => {
         console.log('Repas créé avec succès !', res);
         this.isSubmitting.set(false);
-        // Réinitialiser le formulaire
-        this.mealForm.reset({
-          userId: 1,
-          mealType: MealType.BREAKFAST,
-          notes: '',
-          isCheatMeal: false,
-        });
-        this.items.clear();
-        this.addItem();
+        this.resetForm();
+        this.mealService.triggerRefresh();
       },
       error: (err) => {
         console.error('Erreur lors de la création :', err);
@@ -95,6 +112,18 @@ export class MealForm {
     });
   }
 
+  // Retour à l'état de départ : champs de base par défaut + une seule ligne d'aliment vide
+  private resetForm(): void {
+    this.items.clear();
+    this.mealForm.reset({
+      userId: 1,
+      mealType: MealType.BREAKFAST,
+      notes: '',
+      isCheatMeal: false,
+    });
+    this.addItem();
+  }
+
   loadFoodItems(): void {
     this.foodItemService.getFoodItems().subscribe({
       next: (data) => {
@@ -102,6 +131,7 @@ export class MealForm {
       },
       error: (err) => {
         console.error('Erreur API:', err);
+        this.errorMessage.set('Impossible de charger la liste des aliments.');
       },
     });
   }

@@ -48,11 +48,11 @@
       </div>
 
       <div formArrayName="items">
-        @for (item of items.controls; track $index) {
-        <div [formGroupName]="$index" class="item-row">
+        @for (item of items.controls; track item; let i = $index) {
+        <div [formGroupName]="i" class="item-row">
           <div class="form-group">
             <select formControlName="foodItemId">
-              <option [ngValue]="null" disabled selected>Choisir un aliment</option>
+              <option [ngValue]="null" disabled>Choisir un aliment</option>
               @for (food of foodItems(); track food.id) {
               <option [ngValue]="food.id">{{ food.name }}</option>
               }
@@ -60,14 +60,20 @@
           </div>
 
           <div class="form-group">
-            <label>Quantité (g)</label>
-            <input type="number" formControlName="quantityInGrams" min="1" placeholder="Ex: 150" />
+            <label [attr.for]="'qty-' + i">Quantité (g)</label>
+            <input
+              type="number"
+              [id]="'qty-' + i"
+              formControlName="quantityInGrams"
+              min="1"
+              placeholder="Ex: 150"
+            />
           </div>
 
           <button
             type="button"
             class="btn-danger"
-            (click)="removeItem($index)"
+            (click)="removeItem(i)"
             [disabled]="items.length <= 1"
             title="Supprimer la ligne"
           >
@@ -77,16 +83,28 @@
         }
       </div>
     </div>
-    <!-- Balise de fermeture ajoutée ici pour .items-section -->
+
+    <!-- Encadré des macros en temps réel -->
+    <div class="macros-summary-card">
+      <h4>Valeurs nutritionnelles estimées</h4>
+      <div class="macros-row">
+        <span>🔥 Calories : {{ totalMacros.calories }} kcal</span>
+        <span>🥩 Protéines : {{ totalMacros.proteins }}g</span>
+        <span>🍞 Glucides : {{ totalMacros.carbs }}g</span>
+        <span>🥑 Lipides : {{ totalMacros.fat }}g</span>
+      </div>
+    </div>
 
     <!-- Soumission -->
     <div class="form-actions">
       <button type="submit" class="btn-primary" [disabled]="mealForm.invalid || isSubmitting()">
         @if (isSubmitting()) { Enregistrement... } @else { Enregistrer le repas }
       </button>
-      <!-- Permet de voir si le form est valide ou non
+
+      <!-- Debug : à retirer une fois le formulaire validé
       <p>Form Valid: {{ mealForm.valid }}</p>
-      <p>Form Values: {{ mealForm.value | json }}</p> -->
+      <p>Form Values: {{ mealForm.value | json }}</p>
+      -->
     </div>
   </form>
 </section>

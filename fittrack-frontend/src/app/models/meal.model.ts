@@ -10,7 +10,7 @@ export enum MealType {
 export interface CreateMealDto {
   date: string; // Format ISO string: "YYYY-MM-DDTHH:mm:ss"
   mealType: MealType;
-  isCheatMeal: boolean;
+  cheatMeal: boolean;
   notes?: string;
   userId: number;
   items: CreateMealItemDto[];
@@ -20,7 +20,7 @@ export interface MealResponseDto {
   id: number;
   date: string;
   mealType: MealType;
-  isCheatMeal: boolean;
+  cheatMeal: boolean;
   notes?: string;
   userId: number;
   items: MealItemResponseDto[];

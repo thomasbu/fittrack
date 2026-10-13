@@ -5,7 +5,6 @@
       <h1>Tableau de bord Nutrition</h1>
       <p class="subtitle">Suivi en temps réel de vos repas et macros</p>
     </div>
-    <button class="btn-primary" (click)="loadMeals()">🔄 Rafraîchir</button>
   </header>
 
   <!-- Cartes d'objectifs / Résumé rapide -->
@@ -47,15 +46,22 @@
     } @else {
     <div class="meals-grid">
       @for (meal of meals(); track meal.id) {
-      <article class="meal-card" [class.cheat-meal]="meal.isCheatMeal">
+      <article class="meal-card" [class.cheat-meal]="meal.cheatMeal">
         <div class="meal-header">
-          <span class="meal-badge" [ngClass]="getMealBadgeClass(meal.mealType)">
-            {{ meal.mealType }}
-          </span>
-          <span class="meal-date">{{ meal.date | date : 'dd/MM/yyyy HH:mm' }}</span>
+          <div class="meal-header-left">
+            <span class="meal-badge" [ngClass]="getMealBadgeClass(meal.mealType)">
+              {{ meal.mealType }}
+            </span>
+            <span class="meal-date">{{ meal.date | date : 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+
+          <!-- 🗑️ Bouton de suppression ajouté ici -->
+          <button class="delete-btn" (click)="removeMeal(meal.id)" title="Supprimer ce repas">
+            ❌
+          </button>
         </div>
 
-        @if (meal.isCheatMeal) {
+        @if (meal.cheatMeal) {
         <span class="cheat-tag">🔥 Cheat Meal</span>
         }
 

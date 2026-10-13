@@ -1,8 +1,9 @@
 export interface FoodItem {
   id: number;
+  userId: number;
   name: string;
-  caloriesPer100g: number;
-  proteinsPer100g: number;
-  carbsPer100g: number;
-  fatPer100g: number;
+  caloriesPer100gr: number;
+  proteinPer100gr: number;
+  carbsPer100gr: number;
+  fatPer100gr: number;
 }

@@ -1,127 +1,143 @@
-:host {
-  display: block;
-  margin-bottom: 2rem;
-}
-
+/* ===== meal-form.css ===== */
 .form-card {
-  background-color: #1e293b;
-  border-radius: 12px;
-  padding: 1.5rem;
-  border: 1px solid #334155;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  color: #f8fafc;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 28px;
 }
 
 .form-card h2 {
-  margin-top: 0;
-  margin-bottom: 1.25rem;
-  font-size: 1.25rem;
-  color: #38bdf8;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
 }
 
 .error-banner {
-  background-color: rgba(239, 68, 68, 0.2);
-  border: 1px solid #ef4444;
-  color: #fca5a5;
-  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-left: 4px solid var(--danger);
+  padding: 12px 16px;
   border-radius: 8px;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
 }
 
+/* ---------- Champs ---------- */
 .form-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1rem;
-  align-items: center;
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex: 1;
+  min-width: 160px;
 }
 
 .form-group label {
   font-size: 0.85rem;
-  color: #94a3b8;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
-.form-group input[type='text'],
-.form-group input[type='number'],
-.form-group select {
-  background-color: #0f172a;
-  border: 1px solid #334155;
-  color: #f8fafc;
-  padding: 0.6rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
+input[type='text'],
+input[type='number'],
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  color: var(--text);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input:focus,
+select:focus {
   outline: none;
-  transition: border-color 0.2s;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  border-color: #38bdf8;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
 .checkbox-group {
-  flex-direction: row;
-  align-items: center;
-  height: 100%;
-  padding-top: 1rem;
+  flex: 0 0 auto;
+  justify-content: center;
 }
 
 .checkbox-group label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   cursor: pointer;
-  color: #f8fafc;
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: background 0.15s, border-color 0.15s;
 }
 
+.checkbox-group label:hover {
+  background: #fff7ed;
+  border-color: var(--cal);
+}
+
+.checkbox-group input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--cal);
+}
+
+/* ---------- Liste d'aliments ---------- */
 .items-section {
-  background-color: #0f172a;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1.25rem;
-  border: 1px solid #1e293b;
+  margin: 8px 0 20px;
+  padding: 18px;
+  background: #f9fafb;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
 }
 
 .items-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 14px;
 }
 
 .items-header h3 {
-  margin: 0;
-  font-size: 1rem;
-  color: #cbd5e1;
+  font-size: 1.05rem;
 }
 
 .item-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 0.75rem;
-  align-items: end;
-  margin-bottom: 0.75rem;
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  background: var(--surface);
+  padding: 12px 14px 0;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
 }
 
-.item-row .form-group {
-  margin-bottom: 0;
-}
-
-/* Boutons */
+/* ---------- Boutons ---------- */
 button {
+  font: inherit;
   cursor: pointer;
   border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: opacity 0.2s, background-color 0.2s;
+  border-radius: 8px;
+  transition: background 0.15s, transform 0.1s, opacity 0.15s;
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 button:disabled {
@@ -130,41 +146,88 @@ button:disabled {
 }
 
 .btn-primary {
-  background-color: #38bdf8;
-  color: #0f172a;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 24px;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #7dd3fc;
+  background: var(--primary-hover);
 }
 
 .btn-secondary {
-  background-color: #334155;
-  color: #f8fafc;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
+  background: #eef2ff;
+  color: var(--primary);
+  font-weight: 600;
+  padding: 8px 14px;
 }
 
-.btn-secondary:hover:not(:disabled) {
-  background-color: #475569;
+.btn-secondary:hover {
+  background: #e0e7ff;
 }
 
 .btn-danger {
-  background-color: rgba(239, 68, 68, 0.2);
-  color: #ef4444;
-  border: 1px solid #ef4444;
-  padding: 0.6rem 0.8rem;
-  height: 38px;
+  background: #fee2e2;
+  color: var(--danger);
+  width: 40px;
+  height: 40px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  flex: 0 0 auto;
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: #ef4444;
-  color: #ffffff;
+  background: var(--danger);
+  color: #fff;
 }
 
+/* ---------- Macros en temps réel ---------- */
+.macros-summary-card {
+  background: linear-gradient(135deg, #eef2ff, #ecfeff);
+  border: 1px solid #c7d2fe;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  margin-bottom: 22px;
+}
+
+.macros-summary-card h4 {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.macros-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-weight: 600;
+}
+
+.macros-row span {
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  font-size: 0.9rem;
+}
+
+/* ---------- Actions ---------- */
 .form-actions {
-  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .form-card {
+    padding: 18px;
+  }
+  .btn-primary {
+    width: 100%;
+  }
 }

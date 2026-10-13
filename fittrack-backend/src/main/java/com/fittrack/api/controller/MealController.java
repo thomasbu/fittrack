@@ -46,4 +46,10 @@ public class MealController {
         List<MealResponseDto> response = mealService.getMealsByUserId(userId);
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<Void> deleteMeal(@PathVariable Long id) {
+        mealService.deleteMeal(id);
+        return ResponseEntity.noContent().build();
+    }
 }

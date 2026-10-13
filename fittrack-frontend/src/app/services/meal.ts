@@ -1,7 +1,6 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { Observable, Subject, tap } from 'rxjs';
 import { MealResponseDto, CreateMealDto } from '../models/meal.model';
 
 @Injectable({
@@ -9,26 +8,33 @@ import { MealResponseDto, CreateMealDto } from '../models/meal.model';
 })
 export class MealService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/meals'; // Adapte ton URL si besoin
+  private apiUrl = 'http://localhost:8080/api/meals';
 
-  // Signal déclencheur global pour notifier les changements
-  private refreshSource = signal<number>(0);
-  mealRefresh$ = toObservable(this.refreshSource);
+  // Un Subject simple pour déclencher les rafraîchissements
+  private refreshSubject = new Subject<void>();
+  mealRefresh$ = this.refreshSubject.asObservable();
 
   getMealsByUserId(userId: number): Observable<MealResponseDto[]> {
-    return this.http.get<MealResponseDto[]>(`${this.apiUrl}/user/${userId}`);
+    console.log('📡 Appel HTTP GET vers le backend en cours...');
+    return this.http
+      .get<MealResponseDto[]>(`${this.apiUrl}/user/${userId}`)
+      .pipe(tap((meals) => console.log('✅ Repas reçus du backend :', meals)));
   }
 
   createMeal(mealDto: CreateMealDto): Observable<MealResponseDto> {
     return this.http.post<MealResponseDto>(this.apiUrl, mealDto).pipe(
       tap(() => {
-        // Incrémente le compteur à chaque création réussie pour forcer le rechargement
-        this.refreshSource.update((val) => val + 1);
+        this.triggerRefresh();
       })
     );
   }
 
   triggerRefresh(): void {
-    this.refreshSource.update((val) => val + 1);
+    console.log('🔄 Trigger refresh appelé dans le service !');
+    this.refreshSubject.next();
+  }
+
+  deleteMeal(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
