@@ -1,0 +1,92 @@
+<section class="form-card">
+  <h2>Ajouter un repas</h2>
+
+  @if (errorMessage()) {
+  <div class="error-banner">
+    {{ errorMessage() }}
+  </div>
+  }
+
+  <form [formGroup]="mealForm" (ngSubmit)="onSubmit()">
+    <!-- Type de repas & Option Cheat Meal -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="mealType">Type de repas</label>
+        <select id="mealType" formControlName="mealType">
+          @for (type of mealTypes; track type) {
+          <option [value]="type">{{ type }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label for="isCheatMeal">
+          <input type="checkbox" id="isCheatMeal" formControlName="isCheatMeal" />
+          Cheat Meal
+        </label>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="form-group">
+      <label for="notes">Notes / Description</label>
+      <input
+        type="text"
+        id="notes"
+        formControlName="notes"
+        placeholder="Ex: Post-entraînement, repas dehors..."
+      />
+    </div>
+
+    <!-- Liste dynamique des aliments -->
+    <div class="items-section">
+      <div class="items-header">
+        <h3>Aliments</h3>
+        <button type="button" class="btn-secondary" (click)="addItem()">
+          + Ajouter un aliment
+        </button>
+      </div>
+
+      <div formArrayName="items">
+        @for (item of items.controls; track $index) {
+        <div [formGroupName]="$index" class="item-row">
+          <div class="form-group">
+            <select formControlName="foodItemId">
+              <option [ngValue]="null" disabled selected>Choisir un aliment</option>
+              @for (food of foodItems(); track food.id) {
+              <option [ngValue]="food.id">{{ food.name }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Quantité (g)</label>
+            <input type="number" formControlName="quantityInGrams" min="1" placeholder="Ex: 150" />
+          </div>
+
+          <button
+            type="button"
+            class="btn-danger"
+            (click)="removeItem($index)"
+            [disabled]="items.length <= 1"
+            title="Supprimer la ligne"
+          >
+            ✕
+          </button>
+        </div>
+        }
+      </div>
+    </div>
+    <!-- Balise de fermeture ajoutée ici pour .items-section -->
+
+    <!-- Soumission -->
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="mealForm.invalid || isSubmitting()">
+        @if (isSubmitting()) { Enregistrement... } @else { Enregistrer le repas }
+      </button>
+      <!-- Permet de voir si le form est valide ou non
+      <p>Form Valid: {{ mealForm.valid }}</p>
+      <p>Form Values: {{ mealForm.value | json }}</p> -->
+    </div>
+  </form>
+</section>

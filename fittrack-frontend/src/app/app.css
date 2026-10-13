@@ -1,0 +1,12 @@
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.app-header h1 {
+  color: #38bdf8;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}

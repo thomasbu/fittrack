@@ -1,0 +1,100 @@
+<div class="dashboard-container">
+  <!-- En-tête -->
+  <header class="dashboard-header">
+    <div>
+      <h1>Tableau de bord Nutrition</h1>
+      <p class="subtitle">Suivi en temps réel de vos repas et macros</p>
+    </div>
+    <button class="btn-primary" (click)="loadMeals()">🔄 Rafraîchir</button>
+  </header>
+
+  <!-- Cartes d'objectifs / Résumé rapide -->
+  <section class="summary-grid">
+    <div class="summary-card cal-card">
+      <span class="card-label">Calories Totales</span>
+      <span class="card-value">{{ dailyCalories() | number : '1.0-0' }} <small>kcal</small></span>
+    </div>
+    <div class="summary-card protein-card">
+      <span class="card-label">Protéines</span>
+      <span class="card-value">{{ dailyProteins() | number : '1.0-1' }} <small>g</small></span>
+    </div>
+    <div class="summary-card carb-card">
+      <span class="card-label">Glucides</span>
+      <span class="card-value">{{ dailyCarbs() | number : '1.0-1' }} <small>g</small></span>
+    </div>
+    <div class="summary-card fat-card">
+      <span class="card-label">Lipides</span>
+      <span class="card-value">{{ dailyFat() | number : '1.0-1' }} <small>g</small></span>
+    </div>
+  </section>
+
+  <!-- Message de chargement / erreur -->
+  @if (isLoading()) {
+  <div class="state-banner loading">Chargement de vos données nutritionnelles...</div>
+  } @if (error()) {
+  <div class="state-banner error">{{ error() }}</div>
+  }
+
+  <!-- Liste des repas -->
+  @if (!isLoading() && !error()) {
+  <section class="meals-section">
+    <h2>Repas enregistrés ({{ meals().length }})</h2>
+
+    @if (meals().length === 0) {
+    <div class="empty-state">
+      <p>Aucun repas enregistré pour le moment.</p>
+    </div>
+    } @else {
+    <div class="meals-grid">
+      @for (meal of meals(); track meal.id) {
+      <article class="meal-card" [class.cheat-meal]="meal.isCheatMeal">
+        <div class="meal-header">
+          <span class="meal-badge" [ngClass]="getMealBadgeClass(meal.mealType)">
+            {{ meal.mealType }}
+          </span>
+          <span class="meal-date">{{ meal.date | date : 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+
+        @if (meal.isCheatMeal) {
+        <span class="cheat-tag">🔥 Cheat Meal</span>
+        }
+
+        <!-- Composition du repas -->
+        <div class="meal-items">
+          <h4>Aliments :</h4>
+          <ul>
+            @for (item of meal.items; track item.id) {
+            <li>
+              <strong>{{ item.foodName }}</strong>
+              <span>{{ item.quantityInGrams }}g ({{ item.calories | number : '1.0-0' }} kcal)</span>
+            </li>
+            }
+          </ul>
+        </div>
+
+        @if (meal.notes) {
+        <p class="meal-notes">💬 {{ meal.notes }}</p>
+        }
+
+        <!-- Macros du repas -->
+        <div class="meal-footer">
+          <div class="macro">
+            <span>Cal</span> <strong>{{ meal.totalCalories | number : '1.0-0' }}</strong>
+          </div>
+          <div class="macro prot">
+            <span>Prot</span> <strong>{{ meal.totalProteins | number : '1.0-1' }}g</strong>
+          </div>
+          <div class="macro carb">
+            <span>Glu</span> <strong>{{ meal.totalCarbs | number : '1.0-1' }}g</strong>
+          </div>
+          <div class="macro fat">
+            <span>Lip</span> <strong>{{ meal.totalFat | number : '1.0-1' }}g</strong>
+          </div>
+        </div>
+      </article>
+      }
+    </div>
+    }
+  </section>
+  }
+</div>

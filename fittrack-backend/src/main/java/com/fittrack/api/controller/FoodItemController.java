@@ -17,6 +17,11 @@ public class FoodItemController {
 
     private final FoodItemService foodItemService;
 
+    @GetMapping
+    public ResponseEntity<List<FoodItemDto>> getAllFoodItems() {
+        return ResponseEntity.ok(foodItemService.getAllFoodItems());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<FoodItemDto> getFoodItemById(@PathVariable Long id) {
         FoodItemDto foodItem = foodItemService.getFoodItemById(id);

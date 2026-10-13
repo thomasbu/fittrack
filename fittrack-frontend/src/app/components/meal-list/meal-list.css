@@ -1,0 +1,221 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #0f172a;
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 2rem;
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+}
+
+.subtitle {
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+}
+
+/* Grille résumé des macros */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.summary-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-label {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.card-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.cal-card {
+  border-left: 4px solid #f59e0b;
+}
+.protein-card {
+  border-left: 4px solid #ef4444;
+}
+.carb-card {
+  border-left: 4px solid #3b82f6;
+}
+.fat-card {
+  border-left: 4px solid #10b981;
+}
+
+/* Cartes de repas */
+.meals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.meal-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.meal-card.cheat-meal {
+  border-color: #f59e0b;
+}
+
+.cheat-tag {
+  position: absolute;
+  top: -10px;
+  right: 15px;
+  background: #f59e0b;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.meal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.meal-badge {
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.badge-breakfast {
+  background: #7c3aed;
+  color: #fff;
+}
+.badge-lunch {
+  background: #2563eb;
+  color: #fff;
+}
+.badge-dinner {
+  background: #059669;
+  color: #fff;
+}
+.badge-snack {
+  background: #d97706;
+  color: #fff;
+}
+
+.meal-date {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.meal-items ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.meal-items li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #334155;
+  font-size: 0.9rem;
+}
+
+.meal-notes {
+  font-style: italic;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.meal-footer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  background: #0f172a;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.macro span {
+  display: block;
+  color: #64748b;
+}
+.macro.prot strong {
+  color: #ef4444;
+}
+.macro.carb strong {
+  color: #3b82f6;
+}
+.macro.fat strong {
+  color: #10b981;
+}
+
+.state-banner {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+.loading {
+  background: #1e293b;
+  color: #94a3b8;
+}
+.error {
+  background: #7f1d1d;
+  color: #fca5a5;
+}

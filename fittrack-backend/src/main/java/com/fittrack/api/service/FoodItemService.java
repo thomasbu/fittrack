@@ -8,6 +8,8 @@ import com.fittrack.api.repository.FoodItemRepository;
 import com.fittrack.api.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+
+import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,5 +59,12 @@ public class FoodItemService {
             throw new EntityNotFoundException("Aliment non trouvé avec l'ID : " + id);
         }
         foodItemRepository.deleteById(id);
+    }
+
+    public List<FoodItemDto> getAllFoodItems() {
+        return foodItemRepository.findAll()
+                .stream()
+                .map(foodItemMapper::toDto)
+                .toList();
     }
 }

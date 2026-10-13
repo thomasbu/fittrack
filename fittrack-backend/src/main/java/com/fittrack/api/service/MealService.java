@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class MealService {
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'ID : " + dto.getUserId()));
 
         Meal meal = Meal.builder()
-                .date(dto.getDate())
+                .date(dto.getDate() != null ? dto.getDate() : LocalDateTime.now())
                 .mealType(dto.getMealType())
                 .isCheatMeal(dto.isCheatMeal())
                 .notes(dto.getNotes())
