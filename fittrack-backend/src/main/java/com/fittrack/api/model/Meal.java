@@ -28,7 +28,7 @@ public class Meal {
     private String mealType;
 
     @Column(name = "is_cheat_meal", nullable = false)
-    private boolean isCheatMeal = false;
+    private boolean cheatMeal = false;
 
     private String notes;
 

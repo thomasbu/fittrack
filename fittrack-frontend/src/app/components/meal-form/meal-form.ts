@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MealService } from '../../services/meal';
 import { CreateMealDto, MealType } from '../../models/meal.model';
+import { CreateMealItemDto } from '../../models/meal-item.model';
 import { FoodItemService } from '../../services/food-item';
-import { FoodItem } from '../../models/food-item.model';
 
 @Component({
   selector: 'app-meal-form',
@@ -20,7 +20,7 @@ export class MealForm {
 
   isSubmitting = signal<boolean>(false);
   errorMessage = signal<string | null>(null);
-  foodItems = signal<FoodItem[]>([]);
+  foodItems = this.foodItemService.foodItems;
 
   mealTypes = Object.values(MealType);
 
@@ -28,7 +28,7 @@ export class MealForm {
     userId: [1, [Validators.required]], // ID fixe à 1 pour les tests
     mealType: [MealType.BREAKFAST, [Validators.required]],
     notes: [''],
-    isCheatMeal: [false],
+    cheatMeal: [false],
     items: this.fb.array([]),
   });
 
@@ -95,7 +95,16 @@ export class MealForm {
     this.isSubmitting.set(true);
     this.errorMessage.set(null);
 
-    const dto: CreateMealDto = this.mealForm.value;
+    const raw = this.mealForm.getRawValue();
+    const dto: CreateMealDto = {
+      userId: raw.userId,
+      mealType: raw.mealType,
+      cheatMeal: !!raw.cheatMeal, // !! : jamais null, toujours true ou false
+      notes: raw.notes,
+      items: raw.items as CreateMealItemDto[],
+    };
+
+    console.log('Payload envoyé :', dto); // temporaire, pour vérifier
 
     this.mealService.createMeal(dto).subscribe({
       next: (res) => {
@@ -119,16 +128,14 @@ export class MealForm {
       userId: 1,
       mealType: MealType.BREAKFAST,
       notes: '',
-      isCheatMeal: false,
+      cheatMeal: false,
     });
     this.addItem();
   }
 
+  // Le service remplit lui-même le signal foodItems (via tap), on ne s'abonne que pour les erreurs
   loadFoodItems(): void {
     this.foodItemService.getFoodItems().subscribe({
-      next: (data) => {
-        this.foodItems.set(data);
-      },
       error: (err) => {
         console.error('Erreur API:', err);
         this.errorMessage.set('Impossible de charger la liste des aliments.');

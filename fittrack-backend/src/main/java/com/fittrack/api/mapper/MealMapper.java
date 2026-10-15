@@ -18,7 +18,7 @@ public class MealMapper {
                 .userId(entity.getUser() != null ? entity.getUser().getId() : null)
                 .date(entity.getDate())
                 .mealType(entity.getMealType())
-                .isCheatMeal(entity.isCheatMeal()) // Ajouté ici
+                .cheatMeal(entity.isCheatMeal()) // Ajouté ici
                 .notes(entity.getNotes())
                 .build();
     }
@@ -34,7 +34,7 @@ public class MealMapper {
                 .date(dto.getDate())
                 .mealType(dto.getMealType())
                 .notes(dto.getNotes())
-                .isCheatMeal(dto.isCheatMeal())
+                .cheatMeal(dto.isCheatMeal())
                 .build();
     }
 }

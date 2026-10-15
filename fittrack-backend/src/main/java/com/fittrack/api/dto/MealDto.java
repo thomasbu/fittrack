@@ -24,7 +24,7 @@ public class MealDto {
 
     private String mealType;
 
-    private boolean isCheatMeal;
+    private boolean cheatMeal;
 
     private String notes;
 }

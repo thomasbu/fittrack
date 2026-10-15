@@ -1,4 +1,4 @@
-/* ===== meal-form.css ===== */
+/* ===== meal-form.css (uniquement ce qui est propre au formulaire de repas) ===== */
 .form-card {
   background: var(--surface);
   border-radius: var(--radius);
@@ -11,60 +11,7 @@
   margin-bottom: 20px;
 }
 
-.error-banner {
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
-  border-left: 4px solid var(--danger);
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-size: 0.95rem;
-}
-
-/* ---------- Champs ---------- */
-.form-row {
-  display: flex;
-  gap: 20px;
-  align-items: flex-end;
-  flex-wrap: wrap;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 16px;
-  flex: 1;
-  min-width: 160px;
-}
-
-.form-group label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-input[type='text'],
-input[type='number'],
-select {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: #fff;
-  font: inherit;
-  color: var(--text);
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-
-input:focus,
-select:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-}
-
+/* ---------- Case Cheat Meal ---------- */
 .checkbox-group {
   flex: 0 0 auto;
   justify-content: center;
@@ -127,47 +74,6 @@ select:focus {
   flex-wrap: wrap;
 }
 
-/* ---------- Boutons ---------- */
-button {
-  font: inherit;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  transition: background 0.15s, transform 0.1s, opacity 0.15s;
-}
-
-button:active:not(:disabled) {
-  transform: scale(0.97);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-primary {
-  background: var(--primary);
-  color: #fff;
-  font-weight: 600;
-  padding: 12px 24px;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: var(--primary-hover);
-}
-
-.btn-secondary {
-  background: #eef2ff;
-  color: var(--primary);
-  font-weight: 600;
-  padding: 8px 14px;
-}
-
-.btn-secondary:hover {
-  background: #e0e7ff;
-}
-
 .btn-danger {
   background: #fee2e2;
   color: var(--danger);
@@ -227,7 +133,7 @@ button:disabled {
   .form-card {
     padding: 18px;
   }
-  .btn-primary {
+  .form-actions .btn-primary {
     width: 100%;
   }
 }

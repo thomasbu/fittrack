@@ -48,6 +48,8 @@ public class FoodItemService {
                 .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé avec l'ID : " + dto.getUserId()));
 
         FoodItem foodItem = foodItemMapper.toEntity(dto, user);
+        //pour ne pas écraser un id existant (protection)
+        foodItem.setId(null);
         FoodItem savedFoodItem = foodItemRepository.save(foodItem);
 
         return foodItemMapper.toDto(savedFoodItem);

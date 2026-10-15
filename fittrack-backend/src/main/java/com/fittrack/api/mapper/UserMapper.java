@@ -26,7 +26,7 @@ public class UserMapper {
                 .email(dto.getEmail())
                 .password(dto.getPassword())
                 .objectif(dto.getObjectif())
-                .isEmailVerified(false)
+                .emailVerified(false)
                 .build();
     }
 }

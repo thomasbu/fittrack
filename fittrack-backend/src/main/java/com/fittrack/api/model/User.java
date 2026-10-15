@@ -27,7 +27,7 @@ public class User {
     private String password;
 
     @Column(name = "is_email_verified", nullable = false)
-    private boolean isEmailVerified = false;
+    private boolean emailVerified = false;
 
     private String objectif;
 }

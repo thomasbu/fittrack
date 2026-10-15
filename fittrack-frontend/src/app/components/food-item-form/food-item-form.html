@@ -1,0 +1,42 @@
+<section class="food-form-card">
+  <button type="button" class="btn-secondary" (click)="toggle()">
+    {{ isOpen() ? '− Fermer' : '+ Nouvel aliment' }}
+  </button>
+
+  @if (isOpen()) {
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="food-form">
+    @if (errorMessage()) {
+    <div class="error-banner">{{ errorMessage() }}</div>
+    }
+
+    <div class="form-group">
+      <label for="food-name">Nom</label>
+      <input id="food-name" type="text" formControlName="name" placeholder="Ex: Riz basmati cuit" />
+    </div>
+
+    <p class="hint">Valeurs pour 100 g</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="food-cal">Calories (kcal)</label>
+        <input id="food-cal" type="number" min="0" formControlName="caloriesPer100gr" />
+      </div>
+      <div class="form-group">
+        <label for="food-prot">Protéines (g)</label>
+        <input id="food-prot" type="number" min="0" step="0.1" formControlName="proteinPer100gr" />
+      </div>
+      <div class="form-group">
+        <label for="food-carb">Glucides (g)</label>
+        <input id="food-carb" type="number" min="0" step="0.1" formControlName="carbsPer100gr" />
+      </div>
+      <div class="form-group">
+        <label for="food-fat">Lipides (g)</label>
+        <input id="food-fat" type="number" min="0" step="0.1" formControlName="fatPer100gr" />
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary" [disabled]="form.invalid || isSubmitting()">
+      @if (isSubmitting()) { Ajout... } @else { Ajouter l'aliment }
+    </button>
+  </form>
+  }
+</section>

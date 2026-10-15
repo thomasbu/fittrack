@@ -20,7 +20,7 @@ public class CreateMealDto {
     private LocalDateTime date;
 
     private String mealType;
-    private boolean isCheatMeal;
+    private boolean cheatMeal;
     private String notes;
 
     @NotNull(message = "L'ID utilisateur est obligatoire")

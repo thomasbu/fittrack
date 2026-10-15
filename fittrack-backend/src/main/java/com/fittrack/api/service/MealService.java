@@ -38,7 +38,7 @@ public class MealService {
         Meal meal = Meal.builder()
                 .date(dto.getDate() != null ? dto.getDate() : LocalDateTime.now())
                 .mealType(dto.getMealType())
-                .isCheatMeal(dto.isCheatMeal())
+                .cheatMeal(dto.isCheatMeal())
                 .notes(dto.getNotes())
                 .user(user)
                 .mealItems(new ArrayList<>())

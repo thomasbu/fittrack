@@ -8,7 +8,7 @@ export enum MealType {
 }
 
 export interface CreateMealDto {
-  date: string; // Format ISO string: "YYYY-MM-DDTHH:mm:ss"
+  date?: string; // optionnel : le backend la fixe
   mealType: MealType;
   cheatMeal: boolean;
   notes?: string;

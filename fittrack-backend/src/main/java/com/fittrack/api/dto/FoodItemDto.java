@@ -2,6 +2,7 @@ package com.fittrack.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,9 +23,13 @@ public class FoodItemDto {
     private String name;
 
     @NotNull(message = "Les calories sont obligatoires")
+    @PositiveOrZero(message = "Les calories doivent être positives")
     private Integer caloriesPer100gr;
 
+    @PositiveOrZero
     private Double carbsPer100gr;
+    @PositiveOrZero
     private Double fatPer100gr;
+    @PositiveOrZero
     private Double proteinPer100gr;
 }
